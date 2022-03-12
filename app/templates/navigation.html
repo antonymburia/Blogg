@@ -1,0 +1,33 @@
+<nav id="navigation" class="navbar navbar-expand-sm bg-dark navbar-dark">
+ <div class="container-fluid">
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+   <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+   <ul class="navbar-nav  nav-fill w-100">
+    <li class="nav-item">
+     <a class="nav-link active" href="#home">Home</a>
+    </li>
+
+    <!-- only display when user is authenticated -->
+    {% if current_user.is_authenticated %}
+
+    <li class="nav-item">
+     <a class="nav-link" href="{{url_for( 'main.profile',usersname=current_user.username)}}">Profile</a>
+    </li>
+    <li class="nav-item">
+     <a class="nav-link" href="{{url_for( 'auth.logout')}}">Log Out</a>
+    </li>
+
+    <!-- only display if user is not authenticated -->
+    {% else %}
+
+    <li class="nav-item">
+     <a class="nav-link" href="{{url_for( 'auth.login')}}">Login</a>
+    </li>
+
+    {%endif%}
+   </ul>
+  </div>
+ </div>
+</nav>
