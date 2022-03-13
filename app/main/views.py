@@ -4,6 +4,7 @@ from flask import render_template,redirect,url_for,abort,request,flash
 from ..models import User,Blog
 from .. import db
 from ..request import get_quotes
+from .forms import BlogForm
 
 #Views
 @main.route('/', methods = ['GET','POST'])
@@ -40,9 +41,8 @@ def new_blog():
     blog_form = BlogForm()
     if blog_form.validate_on_submit():
         blog_content = blog_form.blog_content.data
-        blog = blog_form.blog_content.data
-        category = blog_form.category.data
-
+        
+    
         # Updated blog instance
         new_blog = Blog(blog_content=blog_content,user=current_user)
 
