@@ -15,10 +15,12 @@ def index():
 
     quote = get_quotes()
 
+    user = User.query.filter_by(username = current_user.username).first()
+
     blogs = Blog.query.all()
   
 
-    return render_template('index.html',quote = quote, blogs = blogs)
+    return render_template('index.html',quote = quote, blogs = blogs, name = user)
     
 
 @main.route('/user/<usersname>')
@@ -40,11 +42,12 @@ def profile(usersname):
 def new_blog():
     blog_form = BlogForm()
     if blog_form.validate_on_submit():
+        blog_title = blog_form.blog_title.data
         blog_content = blog_form.blog_content.data
         
     
         # Updated blog instance
-        new_blog = Blog(blog_content=blog_content,user=current_user)
+        new_blog = Blog(blog_title = blog_title, blog_content=blog_content,user=current_user)
 
         # Save blog method
         new_blog.save_blog()

@@ -2,11 +2,68 @@
 {% import 'macros.html' as macro %}
 {% import 'bootstrap/wtf.html' as wtf%}
 {%block styles%} {{ super() }}
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous"> 
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+    integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
 {%endblock%}
 {%block content%}
-<h2><b>hi {{name}}:Welcome to blogg</b></h2>
-{% for blog in blogs %}
-{% endfor %}
-{{quote}}
-{%  endblock %}
+<div class="container-fluid">
+    <div class="container">
+        <div class="row">
+            <h2><b>hi {{name}}:Welcome to blogg</b></h2> <br>
+            <div class="col-md-4">
+                <h4><b>Today's Inspiration Quote</b></h4>
+            </div>
+            <div class="col-md-8">
+
+
+                {% for blog in blogs %}
+                <div class="content">
+                    <div class="cont-header">
+                        {{blog.blog_title}}
+                    </div>
+                    <div class="body">
+                        <i>{{blog.blog_content|truncate(700)}}</i>
+                    </div>
+                    <h4><b>This blog was posted on: {{blog.posted}}</b></h4>
+                    <div class="foot">
+                        <a href="">
+                            <button class="btn btn-primary">Read More</button>
+                        </a> 
+                    </div>
+                </div>
+                
+                {% endfor %}
+                {{quote}}
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .container{
+        background-image: url('/static/pictures/marble.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+        
+      
+
+    }
+    .cont-header{
+        background-color: rgb(247,247,247);
+        padding-top: 5px;
+        padding-bottom: 5px;
+        font-weight: 900;
+        font-size: 20px;
+        padding-left: 1%;
+
+    }
+    .content {
+        padding: 2%;
+        line-height: 2;
+        margin-top: 2%;
+        background-color: rgb(255,255,255);
+        border-radius: 2%;
+        box-shadow: 5px 2px 5px 2px;
+
+    }
+</style>
+{% endblock %}

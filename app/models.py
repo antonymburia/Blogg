@@ -55,6 +55,7 @@ class Blog(db.Model):
   __tablename__ = "blogs"
 
   id = db.Column(db.Integer,primary_key = True)
+  blog_title = db.Column(db.String(255))
   blog_content = db.Column(db.String)
   user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
   posted = db.Column(db.DateTime,default=datetime.utcnow)
