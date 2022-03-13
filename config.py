@@ -6,9 +6,13 @@ class Config:
     General configuration parent class
     '''
 
-    UPLOADED_PHOTOS_DEST ='app/static/photos'
+    UPLOADED_PHOTOS_DEST ='app/static/pictures'
     SECRET_KEY = 'thisissecretkey'
     API_URL = os.environ.get("API_URL")
+
+    # simple mde  configurations
+    SIMPLEMDE_JS_IIFE = True
+    SIMPLEMDE_USE_CDN = True
     
 
     #email configurations

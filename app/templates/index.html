@@ -14,13 +14,13 @@
                 {% if quote %}
                 <div class="card">
                     <div class="card-header">
-                        <h4><b>Today's Inspiration Quote</b></h4>
+                        <h4><b> Quote of the day</b></h4>
                     </div>
                     <div class="card-body">
                         {{quote.quote}}
                     </div>
                     <div class="card-footer">
-                        <b><i>{{quote.author}}</i></b>
+                        <b><i>-{{quote.author}}</i></b>
                     </div>
                 </div>
                 {%endif%}
@@ -34,7 +34,7 @@
                         {{blog.blog_title}}
                     </div>
                     <div class="body">
-                        <i>{{blog.blog_content|truncate(700)}}</i>
+                        <i>{{blog.blog_content|truncate(600)}}</i>
                     </div>
                     <h4><b>This blog was posted on: {{blog.posted}}</b></h4>
                     <div class="foot">
@@ -80,6 +80,7 @@
         line-height: 2;
         margin: 2%;
         padding: 2%;
+        background-color: #fff;
     }
 </style>
 {% endblock %}

@@ -1,10 +1,12 @@
 from . import main
 from flask_login import login_required,current_user
 from flask import render_template,redirect,url_for,abort,request,flash
-from ..models import User,Blog,Comment
-from .. import db
+from ..models import User,Blog,Comment,Subscriber
+from .. import db,photos
 from ..request import get_quotes
-from .forms import BlogForm, CommentForm
+from .forms import BlogForm, CommentForm,UpdateProfile
+from ..email import mail_message
+import markdown2 
 
 #Views
 @main.route('/', methods = ['GET','POST'])
@@ -14,15 +16,12 @@ def index():
     '''
 
     quote = get_quotes()
-
-    user = User.query.filter_by(username = current_user.username).first()
-   
-
+    
     blogs = Blog.query.all()
     
   
 
-    return render_template('index.html',quote = quote, blogs = blogs, name = user)
+    return render_template('index.html',quote = quote, blogs = blogs)
     
 
 @main.route('/user/<usersname>')
@@ -42,6 +41,8 @@ def profile(usersname):
 @main.route('/blog/new', methods = ['GET','POST'])
 @login_required
 def new_blog():
+    
+    subscribers = Subscriber.query.all()
     blog_form = BlogForm()
     if blog_form.validate_on_submit():
         blog_title = blog_form.blog_title.data
@@ -53,6 +54,8 @@ def new_blog():
 
         # Save blog method
         new_blog.save_blog()
+        for subscriber in subscribers:
+            mail_message("Alert New Blog","email/new_blog",subscriber.email,new_blog=new_blog)
         return redirect(url_for('.index'))
 
     
@@ -79,3 +82,34 @@ def blogs(id):
     
     
     return render_template('blog.html', blogs = blogs, comment_form = comment_form, comments = comments)
+
+
+@main.route('/user/<usersname>/update',methods = ['GET','POST'])
+@login_required
+def update_profile(usersname):
+    user = User.query.filter_by(username = usersname).first()
+    if user is None:
+        abort(404)
+
+    form = UpdateProfile()
+
+    if form.validate_on_submit():
+        user.bio = form.bio.data
+
+        db.session.add(user)
+        db.session.commit()
+
+        return redirect(url_for('.profile',usersname=user.username))
+
+    return render_template('profile/update.html',form =form)
+
+@main.route('/user/<usersname>/update/pic',methods= ['POST'])
+@login_required
+def update_pic(usersname):
+    user = User.query.filter_by(username = usersname).first()
+    if 'photo' in request.files:
+        filename = photos.save(request.files['photo'])
+        path = f'photos/{filename}'
+        user.profile_pic_path = path
+        db.session.commit()
+    return redirect(url_for('main.profile',usersname=usersname))

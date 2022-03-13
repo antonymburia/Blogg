@@ -1,0 +1,2 @@
+Hello {{subscriber.name}}
+You have succesfully subscribed to blogg. 
