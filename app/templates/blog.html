@@ -1,0 +1,46 @@
+{% extends 'base.html'%}
+{% import 'macros.html' as macro %}
+
+
+{% block content %}
+
+<!-- Content block -->
+<div class="container">
+  <h2><b>More</b></h2>
+  <div class="row">
+    {% if blogs %}
+    
+    <div class="col-md-8">
+        <div class="body">
+            {{blogs.blog_content}}
+        </div>
+    </div>
+    <div class="col-md-4">
+        <h2><b>Comments</b></h2>
+        {% for comment in comments %}
+        <div class="comments">
+
+            {{Comment.comments}}
+        </div>
+    </div>
+    {% endif %}
+  </div>
+
+</div>
+<style>
+    .container{
+        background-image: url(/static/pictures/marble.jpg);
+        height: 700px;
+    }
+    .body{
+        background-color: rgb(247,247,247);
+        line-height: 2;
+        padding: 2%;
+        margin: 5%;
+        font-size: 20px;
+        box-shadow: 5px 2px 5px 2px;
+
+    }
+</style>
+
+{% endblock %}

@@ -55,3 +55,15 @@ def new_blog():
 
     
     return render_template('newblog.html',blog_form = blog_form )
+
+@main.route('/blog/<id>')
+def blogs(id):
+
+    '''
+    View root page function that returns the blog page and its data
+    '''
+
+    blogs = Blog.query.filter_by(id=id).first()
+    
+    
+    return render_template('blog.html', blogs = blogs)
