@@ -80,5 +80,7 @@ class Blog(db.Model):
     blog = Blog.query.filter_by(id=id).last()
 
     return blog
+
+
         
    

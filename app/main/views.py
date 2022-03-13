@@ -1,7 +1,7 @@
 from . import main
 from flask_login import login_required,current_user
 from flask import render_template,redirect,url_for,abort,request,flash
-from ..models import User
+from ..models import User,Blog
 from .. import db
 from ..request import get_quotes
 
@@ -14,7 +14,10 @@ def index():
 
     quote = get_quotes()
 
-    return render_template('index.html',quote = quote)
+    blogs = Blog.query.all()
+    blog = Blog.query.filter_by(id=blog.id).first()
+
+    return render_template('index.html',quote = quote, blogs = blogs)
     
 
 @main.route('/user/<usersname>')
