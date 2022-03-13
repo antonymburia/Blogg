@@ -1,10 +1,10 @@
 from . import main
 from flask_login import login_required,current_user
 from flask import render_template,redirect,url_for,abort,request,flash
-from ..models import User,Blog
+from ..models import User,Blog,Comment
 from .. import db
 from ..request import get_quotes
-from .forms import BlogForm
+from .forms import BlogForm, CommentForm
 
 #Views
 @main.route('/', methods = ['GET','POST'])
@@ -16,8 +16,10 @@ def index():
     quote = get_quotes()
 
     user = User.query.filter_by(username = current_user.username).first()
+   
 
     blogs = Blog.query.all()
+    
   
 
     return render_template('index.html',quote = quote, blogs = blogs, name = user)
@@ -64,6 +66,15 @@ def blogs(id):
     '''
 
     blogs = Blog.query.filter_by(id=id).first()
+    blog = Blog.query.filter_by(id=blogs.id).first()
+    comment_form = CommentForm()
+    if comment_form.validate_on_submit():
+        comment = comment_form.text.data
+        new_comment = Comment(comment = comment,user_id = current_user, blog = blog)
+        new_comment.save_comment()
+        
+        flash('Your comment has been submitted')
+        return redirect(url_for('.index'))
     
     
-    return render_template('blog.html', blogs = blogs)
+    return render_template('blog.html', blogs = blogs, comment_form = comment_form)
