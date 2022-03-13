@@ -33,3 +33,22 @@ def profile(usersname):
     
 
     return render_template("profile/profile.html", user = user, date = user_joined)
+
+@main.route('/blog/new', methods = ['GET','POST'])
+@login_required
+def new_blog():
+    blog_form = BlogForm()
+    if blog_form.validate_on_submit():
+        blog_content = blog_form.blog_content.data
+        blog = blog_form.blog_content.data
+        category = blog_form.category.data
+
+        # Updated blog instance
+        new_blog = Blog(blog_content=blog_content,user=current_user)
+
+        # Save blog method
+        new_blog.save_blog()
+        return redirect(url_for('.index'))
+
+    
+    return render_template('newblog.html',blog_form = blog_form )
