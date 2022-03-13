@@ -58,7 +58,7 @@ def new_blog():
     
     return render_template('newblog.html',blog_form = blog_form )
 
-@main.route('/blog/<id>')
+@main.route('/blog/<id>', methods = ['GET','POST'])
 def blogs(id):
 
     '''
@@ -67,14 +67,15 @@ def blogs(id):
 
     blogs = Blog.query.filter_by(id=id).first()
     blog = Blog.query.filter_by(id=blogs.id).first()
+    blog_id = blog.id
+    comments = Comment.get_comments(blog)
     comment_form = CommentForm()
     if comment_form.validate_on_submit():
         comment = comment_form.text.data
-        new_comment = Comment(comment = comment,user_id = current_user, blog = blog)
+        new_comment = Comment(comment = comment,user = current_user, blog = blog_id)
         new_comment.save_comment()
         
         flash('Your comment has been submitted')
-        return redirect(url_for('.index'))
     
     
-    return render_template('blog.html', blogs = blogs, comment_form = comment_form)
+    return render_template('blog.html', blogs = blogs, comment_form = comment_form, comments = comments)

@@ -9,9 +9,21 @@
 <div class="container-fluid">
     <div class="container">
         <div class="row">
-            <h2><b>hi {{name}}:Welcome to blogg</b></h2> <br>
-            <div class="col-md-4">
-                <h4><b>Today's Inspiration Quote</b></h4>
+            <h2><b>blogg</b></h2> <br>
+            <div class="col-md-4"> 
+                {% if quote %}
+                <div class="card">
+                    <div class="card-header">
+                        <h4><b>Today's Inspiration Quote</b></h4>
+                    </div>
+                    <div class="card-body">
+                        {{quote.quote}}
+                    </div>
+                    <div class="card-footer">
+                        <b><i>{{quote.author}}</i></b>
+                    </div>
+                </div>
+                {%endif%}
             </div>
             <div class="col-md-8">
 
@@ -33,7 +45,6 @@
                 </div>
                 
                 {% endfor %}
-                {{quote}}
             </div>
         </div>
     </div>
@@ -64,6 +75,11 @@
         border-radius: 2%;
         box-shadow: 5px 2px 5px 2px;
 
+    }
+    .card{
+        line-height: 2;
+        margin: 2%;
+        padding: 2%;
     }
 </style>
 {% endblock %}
