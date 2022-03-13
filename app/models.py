@@ -16,6 +16,9 @@ class User(UserMixin,db.Model):
   profile_pic_path = db.Column(db.String)
   pass_secure = db.Column(db.String(255))
   date_joined = db.Column(db.DateTime,default=datetime.utcnow)
+  blogs = db.relationship('Blog',backref = 'user',lazy = "dynamic")
+  comments = db.relationship('Comment',backref = 'user',lazy = "dynamic")
+
 
 
   @property
@@ -36,3 +39,46 @@ class User(UserMixin,db.Model):
   @login_manager.user_loader
   def load_user(user_id):
     return User.query.get(int(user_id))
+
+class Quote:
+  '''
+    Quote class to define Quotes Objects
+      
+  '''
+  def __init__(self,id,author,quote,permalink):
+        self.id =id
+        self.author = author
+        self.quote = quote
+        self.permalink = permalink
+
+class Blog(db.Model):
+  __tablename__ = "blogs"
+
+  id = db.Column(db.Integer,primary_key = True)
+  add_description = db.Column(db.String)
+  content = db.Column(db.String(1000))
+  category = db.Column(db.String)
+  user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
+  likes = db.Column(db.Integer)
+  dislikes = db.Column(db.Integer)
+  posted = db.Column(db.DateTime,default=datetime.utcnow)
+
+
+  comments = db.relationship('Comment',backref =  'blog_id',lazy = "dynamic")
+
+  def save_blog(self):
+    db.session.add(self)
+    db.session.commit()
+
+  @classmethod
+  def get_blogs(cls,category):
+    blogs = Blog.query.filter_by(category=category).all()
+    return blogs
+
+  @classmethod
+  def get_blog(cls,id):
+    blog = Blog.query.filter_by(id=id).last()
+
+    return blog
+        
+   

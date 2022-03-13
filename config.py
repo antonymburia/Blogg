@@ -8,6 +8,7 @@ class Config:
 
     UPLOADED_PHOTOS_DEST ='app/static/photos'
     SECRET_KEY = 'thisissecretkey'
+    API_URL = os.environ.get("API_URL")
     
 
     #email configurations
