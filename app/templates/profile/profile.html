@@ -1,0 +1,16 @@
+{% extends 'base.html'%} {%import 'macros.html' as macro%}
+{% block content %}
+<div class="container">
+  <h3 style="text-align: center;"> <strong>{{user.username}}</strong> </h3>
+  <h4><b>joined on: {{date}}</b></h4>
+  <div class="col">
+    <div class="thumbnail">
+      {% if user.profile_pic_path %}
+      <img src="{{url_for( 'static',filename=user.profile_pic_path)}} " alt="profile-pic " class="img-circle ">
+      {%else%}
+      <p> no set profile picture</p>
+      <a href=""><button class="btn btn-primary">Update Profile</button></a>
+      {% endif %}
+    </div>
+  </div>
+  {% endblock %}
