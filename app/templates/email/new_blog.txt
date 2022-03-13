@@ -1,4 +1,4 @@
-Hello {{subscriber.name}}
+Hello 
 
 Checkout this new Post on blogg  
 

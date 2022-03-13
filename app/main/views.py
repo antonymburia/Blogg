@@ -4,7 +4,7 @@ from flask import render_template,redirect,url_for,abort,request,flash
 from ..models import User,Blog,Comment,Subscriber
 from .. import db,photos
 from ..request import get_quotes
-from .forms import BlogForm, CommentForm,UpdateProfile
+from .forms import BlogForm, CommentForm,UpdateProfile,SubscribeForm
 from ..email import mail_message
 import markdown2 
 
@@ -113,3 +113,23 @@ def update_pic(usersname):
         user.profile_pic_path = path
         db.session.commit()
     return redirect(url_for('main.profile',usersname=usersname))
+
+@main.route('/subscribe/', methods=['GET','POST'])
+def subscriber():
+    subscribe_form=SubscribeForm()
+
+    if subscribe_form.validate_on_submit():
+
+        subscriber= Subscriber(email=subscribe_form.email.data,name = subscribe_form.name.data)
+
+        db.session.add(subscriber)
+        db.session.commit()
+
+        mail_message("Welcome to K-Blogs","email/subscriber",subscriber.email,subscriber=subscriber)
+
+    subscriber = Blog.query.all()
+
+    blog = Blog.query.all()
+
+
+    return render_template('subscribe.html',subscriber=subscriber,subscribe_form=subscribe_form,blog=blog)
