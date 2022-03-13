@@ -15,7 +15,7 @@ def index():
     quote = get_quotes()
 
     blogs = Blog.query.all()
-    blog = Blog.query.filter_by(id=blog.id).first()
+  
 
     return render_template('index.html',quote = quote, blogs = blogs)
     
