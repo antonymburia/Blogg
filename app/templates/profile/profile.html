@@ -4,8 +4,8 @@
   <h3 style="text-align: center;"> <strong>{{user.username}}</strong> </h3>
   <h4><b>joined on: {{date}}</b></h4>
   <div class="row">
-    <div class="col-md-4"></div>
-  <div class="col-md-4">
+    <div class="col-md-3"></div>
+  <div class="col-md-6">
     <div class="thumbnail">
       {% if user.profile_pic_path %}
       <img src="{{url_for( 'static',filename=user.profile_pic_path)}} " alt="profile-pic " class="img-circle ">
@@ -37,7 +37,7 @@
       {% endif %}
     </div>
   </div>
-  <col-md-4></col-md-4>
+  <col-md-4></col-md-3>
   </div>
   <style>
     .thumbnail {
