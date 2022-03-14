@@ -3,7 +3,9 @@
 <div class="container">
   <h3 style="text-align: center;"> <strong>{{user.username}}</strong> </h3>
   <h4><b>joined on: {{date}}</b></h4>
-  <div class="col">
+  <div class="row">
+    <div class="col-md-4"></div>
+  <div class="col-md-4">
     <div class="thumbnail">
       {% if user.profile_pic_path %}
       <img src="{{url_for( 'static',filename=user.profile_pic_path)}} " alt="profile-pic " class="img-circle ">
@@ -17,8 +19,11 @@
         <input type="file" name="photo" class="form-control" required>
         <input type="submit">
       </form>
-      <a href="{{url_for('main.update_profile',usersname=user.username)}}"><button class="btn btn-primary">Update
-          Profile</button></a>
+      <a href="{{url_for('main.update_profile',usersname=user.username)}}">
+        <button class="btn btn-primary">
+          Update Profile
+        </button>
+      </a>
       {% endif %}
 
     </div>
@@ -31,4 +36,11 @@
       {% endif %}
     </div>
   </div>
+  <col-md-4></col-md-4>
+  </div>
+  <style>
+    .thumbnail {
+      width: 100%;
+    }
+  </style>
   {% endblock %}
