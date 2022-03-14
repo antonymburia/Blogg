@@ -7,7 +7,7 @@ Antony Mburia Gakono
 This is a simple web app where users can see create an account, login, view pitches, comment on pitches, and create new pitches
 
 ## Screenshot
-<img src="app/static/pictures/Screenshot from 2022-03-14 11-09-07.png" alt="">
+<img src="app/static/pictures/Screenshot from 2022-03-14 12-28-57.png" alt="">
 
 ## Setup/ Installation Requirements
 The application requires the following installations to run
